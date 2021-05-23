@@ -32,7 +32,7 @@ class NoteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (model.loginRequired) {
+        if (model.requestLogin) {
             val action = NoteListFragmentDirections.actionToLoginRegister()
             findNavController().navigate(action)
         } else {
@@ -74,7 +74,7 @@ class NoteListFragment : Fragment() {
                 }
             }
             bottomAppBar.setNavigationOnClickListener {
-                model.loginRequired = true
+                model.requestLogin = true
                 model.currentUser = null
                 val action = NoteListFragmentDirections.actionToLoginRegister()
                 findNavController().navigate(action)

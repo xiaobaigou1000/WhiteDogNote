@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +29,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model.loginRequired = false
+        model.requestLogin = false
 
         binding.apply {
             navToRegisterButton.setOnClickListener {
@@ -36,10 +37,10 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-            loginUserName.editText?.doOnTextChanged { _, _, _, _ ->
+            loginUserName.editText?.doAfterTextChanged { _ ->
                 loginUserName.error = null
             }
-            loginUserPassword.editText?.doOnTextChanged { _, _, _, _ ->
+            loginUserPassword.editText?.doAfterTextChanged { _ ->
                 loginUserPassword.error = null
             }
 

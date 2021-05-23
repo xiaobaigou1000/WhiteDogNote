@@ -16,7 +16,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val userDao = database.userDao()
     private val noteDao = database.noteDao()
 
-    var loginRequired = true
+    var requestLogin = true
 
     suspend fun queryUserByName(name: String): User? {
         return userDao.queryByName(name)

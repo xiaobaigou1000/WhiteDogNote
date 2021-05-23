@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
-                android:minLines="10"
+                android:minLines="1"
 
                 android:inputType="textMultiLine"
                 android:importantForAutofill="no"
