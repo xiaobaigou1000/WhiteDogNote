@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WhiteDogNote</string>
+    <string name="create_new_note">create new note</string>
+    <string name="delete_selected">delete_selected</string>
+    <string name="delete_current_note">delete current note</string>
+    <string name="title">title</string>
+    <string name="content">content</string>
+</resources>
