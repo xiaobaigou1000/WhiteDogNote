@@ -22,7 +22,6 @@ class EditNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentEditNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,7 +43,7 @@ class EditNoteFragment : Fragment() {
                     }
                 }
             } ?: run {
-                Toast.makeText(requireContext(),"empty current note",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(),"empty current note",Toast.LENGTH_SHORT).show()
                 val action=EditNoteFragmentDirections.actionEditNoteFragmentToNoteListFragment()
                 findNavController().navigate(action)
             }

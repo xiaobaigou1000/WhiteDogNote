@@ -5,6 +5,16 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/noteListFragment">
 
+    <action
+        android:id="@+id/action_to_note_list_fragment"
+        app:destination="@id/noteListFragment"
+        app:popUpTo="@id/noteListFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_to_login_register"
+        app:destination="@id/loginFragment" />
+
     <fragment
         android:id="@+id/noteListFragment"
         android:name="ink.xiaobaigou.whitedognote.fragment.NoteListFragment"
@@ -23,6 +33,26 @@
             android:id="@+id/action_editNoteFragment_to_noteListFragment"
             app:destination="@id/noteListFragment"
             app:popUpTo="@id/noteListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ink.xiaobaigou.whitedognote.fragment.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="ink.xiaobaigou.whitedognote.fragment.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

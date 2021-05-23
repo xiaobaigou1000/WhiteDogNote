@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import ink.xiaobaigou.whitedognote.R
 import ink.xiaobaigou.whitedognote.adapter.NoteListAdapter
 import ink.xiaobaigou.whitedognote.database.entity.Note
-import ink.xiaobaigou.whitedognote.database.entity.User
 import ink.xiaobaigou.whitedognote.databinding.FragmentNoteListBinding
 import ink.xiaobaigou.whitedognote.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
@@ -26,7 +25,6 @@ class NoteListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentNoteListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,16 +32,20 @@ class NoteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            model.register(User(userName = "1", passWord = "1"))
-            model.queryUserByName("1")?.let {
-                model.updateCurrentUser(it)
+        if (model.loginRequired) {
+            val action = NoteListFragmentDirections.actionToLoginRegister()
+            findNavController().navigate(action)
+        } else {
+            if (model.currentUser == null) {
+                requireActivity().finish()
             }
         }
 
         binding.apply {
             val adapter = NoteListAdapter(mutableListOf()) { _, note, _ ->
                 model.updateCurrentNote(note)
+                val action = NoteListFragmentDirections.actionNoteListFragmentToEditNoteFragment()
+                findNavController().navigate(action)
             }
             noteList.adapter = adapter
             noteList.layoutManager =
@@ -51,10 +53,13 @@ class NoteListFragment : Fragment() {
 
             createNewNoteFab.setOnClickListener {
                 lifecycleScope.launch {
-                    val note = model.currentUser.value?.let { user ->
+                    val note = model.currentUser?.let { user ->
                         model.createNote(Note(title = "", content = "", authorId = user.id))
                     }
                     model.updateCurrentNote(note)
+                    val action =
+                        NoteListFragmentDirections.actionNoteListFragmentToEditNoteFragment()
+                    findNavController().navigate(action)
                 }
             }
 
@@ -68,16 +73,15 @@ class NoteListFragment : Fragment() {
                     else -> false
                 }
             }
-        }
-
-        model.currentNote.observe(viewLifecycleOwner){
-            it?.let {
-                val action=NoteListFragmentDirections.actionNoteListFragmentToEditNoteFragment()
+            bottomAppBar.setNavigationOnClickListener {
+                model.loginRequired = true
+                model.currentUser = null
+                val action = NoteListFragmentDirections.actionToLoginRegister()
                 findNavController().navigate(action)
             }
         }
 
-        model.currentUser.observe(viewLifecycleOwner) { user ->
+        model.currentUser?.let { user ->
             model.getNoteListFlow(user).asLiveData(lifecycleScope.coroutineContext)
                 .observe(viewLifecycleOwner) {
                     val noteListAdapter = binding.noteList.adapter as NoteListAdapter

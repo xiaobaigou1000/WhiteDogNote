@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     indices = [Index(
-        value = ["userName"],
+        value = ["username"],
         unique = true
     )]
 )
@@ -16,8 +16,8 @@ data class User(
     @ColumnInfo(name = "id")
     val id: Long = 0,
 
-    @ColumnInfo(name = "userName")
-    val userName: String,
-    @ColumnInfo(name = "passWord")
-    val passWord: String,
+    @ColumnInfo(name = "username")
+    val username: String,
+    @ColumnInfo(name = "password")
+    val password: String,
 )

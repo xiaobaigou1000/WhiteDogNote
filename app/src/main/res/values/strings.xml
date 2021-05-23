@@ -5,4 +5,16 @@
     <string name="delete_current_note">delete current note</string>
     <string name="title">title</string>
     <string name="content">content</string>
+    <string name="user_name">user name</string>
+    <string name="user_login">User Login</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="password">password</string>
+    <string name="user_register">User Register</string>
+    <string name="invalid_user_name">Invalid username</string>
+    <string name="user_does_not_exist">User does not exist</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="incorrect_password">Incorrect password</string>
+    <string name="password_not_match">Password not match</string>
+    <string name="login_failed">Login failed.</string>
 </resources>

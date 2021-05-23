@@ -16,18 +16,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val userDao = database.userDao()
     private val noteDao = database.noteDao()
 
-    private val firstLogin = true
+    var loginRequired = true
 
     suspend fun queryUserByName(name: String): User? {
         return userDao.queryByName(name)
     }
 
-    private val _currentUser = MutableLiveData<User>()
-    val currentUser: LiveData<User> get() = _currentUser
-
-    fun updateCurrentUser(user: User) {
-        _currentUser.value = user
-    }
+    var currentUser: User?=null
 
     fun getNoteListFlow(user: User): Flow<List<Note>> {
         return noteDao.queryUserNoteFlow(user.id)
@@ -71,7 +66,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     suspend fun register(user: User): User? {
-        val existedUser = userDao.queryByName(user.userName)
+        val existedUser = userDao.queryByName(user.username)
         existedUser?.let { return null }
         val result = userDao.insert(user)
         val id = result.firstOrNull()
